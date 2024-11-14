@@ -18,12 +18,14 @@ function App() {
 
   const AddFriend = () =>{
 
+    // Use the `_id` returned from the server response to ensure the list has the correct ID.
+
     Axios.post('http://localhost:3030/addfriend',{
       name: name,
       age: age
     })
     .then((data)=>{
-      SetListOfFriend([...listOfFriend,{name:name,age:age}])
+      SetListOfFriend([...listOfFriend,{_id: response.data.id,name:name,age:age}])
       console.log("friend added",data)
     })
     .catch((error)=>{
@@ -31,6 +33,34 @@ function App() {
     })
   }
 
+  const updateFriend = (id) =>{
+    let newAge = prompt("Enter the age here ....");
+    console.log(id)
+
+    Axios.put("http://localhost:3030/update",{
+      newAge : newAge,
+      id:id
+    })
+    .then((data)=>{
+      SetListOfFriend(listOfFriend.map((val)=>{
+          return val._id == id ? {...val,age:newAge}:val;
+      }))
+    })
+    console.log(id);
+
+  }
+
+  const deleteFriend = (id) => {
+
+    Axios.delete(`http://localhost:3030/delete/${id}`).then(() => {
+          SetListOfFriend(listOfFriend.filter((val) => val._id !== id));
+          console.log("Friend deleted");
+     })
+      .catch((error) => {
+            console.log("Error deleting friend:", error);
+      });
+
+  }
 
   useEffect(()=>{
     const fetchData = () =>{
@@ -67,8 +97,8 @@ function App() {
                                 <h3>{data.name}</h3>
                                 <h3>{data.age}</h3>
                             </div>
-                            <button>Update</button>
-                            <button id="remove-btn-border">X</button>
+                            <button  onClick={()=>updateFriend(data._id)}>Update</button>
+                            <button id="remove-btn-border" onClick={()=>deleteFriend(data._id)}>X</button>
                       </div>
         })}
       </div>

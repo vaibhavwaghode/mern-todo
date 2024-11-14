@@ -28,16 +28,61 @@ app.post('/addfriend',async (req,res)=>{
 
 })
 
-app.get('/read',async (req,res)=>{
 
-        try{
-            const result = await FriendModel.find();
-            res.status(200).json(result);
-        }catch(err){
-            res.status(500).json(err);
+
+app.put('/update', async(req,res)=>{
+
+    const id = req.body.id;
+    const newAge = Number(req.body.newAge);
+
+    console.log(id,newAge);
+
+    try{
+        const updatedOne = await FriendModel.findByIdAndUpdate(id,{$set: {age: newAge }},{new:true}).exec();// `exec()` is optional, but fine to include for consistency.
+        if (updatedOne) {
+            console.log(updatedOne);
+        const updatedOne = await FriendModel.findByIdAndUpdate({_id:id},{$set: {age: newAge }},{new:true}).exec();// `exec()` is optional, but fine to include for consistency.
+            res.send("Updated successfully",updatedOne);
+        } else {
+            res.status(404).send("Document not found");
         }
 
+    }catch(error){
+        console.error("Error updating document:", error);
+        res.status(500).send("Internal server error");
+    }
 })
+
+app.get('/read',async (req,res)=>{
+
+    try{
+        const result = await FriendModel.find();
+        res.status(200).json(result);
+    }catch(err){
+        res.status(500).json(err);
+    }
+
+})
+
+
+app.delete('/delete/:id',async (req,res)=>{
+    const id = req.params.id;
+    try {
+        const deleted = await FriendModel.findByIdAndDelete(id);
+        if (deleted) {
+            res.send("Deleted successfully");
+        } else {
+            res.status(404).send("Document not found");
+        }
+    } catch (error) {
+        console.error("Error deleting document:", error);
+        res.status(500).send("Internal server error");
+    }
+})
+
+
+
+
 
 // app.get('/insert',async (req,res)=>{
 //     const friend = new FriendModel({
