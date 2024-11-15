@@ -1,0 +1,78 @@
+
+.input-box{
+  width: 100%;
+  height: 300px;
+  background-color: #5cc63f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.input-box  button{
+  width: 150px;
+  height: 40px;
+  margin-top: 15px;
+  border-radius: 5px;
+  background-color: #38a11a;
+  box-shadow: 1px 1px 1px 1px;
+  border-style: none;
+}
+
+.input-box button:hover{
+  cursor: pointer;
+}
+.input-box input{
+  width: 250px;
+  height: 35px;
+  margin-top: 10px;
+  padding-left: 10px;
+}
+
+.input-box .inputs{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+}
+.Listoffriends{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.friend{
+    width: 400px;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+.friendContainer{
+  display: flex;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 10px;
+  color: white;
+  background-color: #38a11a;
+}
+
+.friendContainer button{
+  width: 60px;
+  height: 50px;
+  border: 2px solid #071603;
+  background-color: #38a11a;
+  font-family: 'Courier New', Courier, monospace;
+  color: white;
+
+}
+.friendContainer button:hover{
+  cursor: pointer;
+}
+
+#remove-btn-border{
+  border-left: none;
+}
